@@ -9,8 +9,6 @@ command! QfToggle call qf_tools#toggle()
 command! QuickFixToLocList call setloclist(0, getqflist())
 command! LocListToQuickFix call setqflist(getloclist(0))
 
-" <Plug> mappings; no keys are bound here (see README)
-nnoremap <silent> <Plug>(qf-tools-toggle) <Cmd>call qf_tools#toggle()<CR>
-" In a quickfix or location list window
-nnoremap <silent> <Plug>(qf-tools-delete) <Cmd>call qf_tools#delete_item()<CR>
-nnoremap <silent> <Plug>(qf-tools-undo) <Cmd>call qf_tools#undo()<CR>
+" Toggle the quickfix window (as vim-unimpaired's yo* toggles options).
+" dd / u in list windows: ftplugin/qf/qf_tools.vim
+nnoremap <silent> yoq <Cmd>call qf_tools#toggle()<CR>
