@@ -1,5 +1,4 @@
 function! qf_tools#toggle() abort
-  " Check if any quickfix window is open
   let l:win = filter(range(1, winnr('$')), 'getwinvar(v:val, "&buftype") ==# "quickfix"')
   if empty(l:win)
     copen
@@ -7,10 +6,6 @@ function! qf_tools#toggle() abort
     cclose
   endif
 endfunction
-
-" delete_item() removes the entry under the cursor and undo() puts it back, in
-" both quickfix and location list windows. Once nothing is left to restore in
-" the current list, undo() goes to the older list (:colder / :lolder).
 
 function! s:IsLoclist() abort
   return getwininfo(win_getid())[0].loclist
