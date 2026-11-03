@@ -22,6 +22,9 @@ function! s:SetItems(items) abort
   else
     call setqflist([], 'r', {'items': a:items})
   endif
+  if exists('#User#QfToolsChanged')
+    doautocmd <nomodeline> User QfToolsChanged
+  endif
 endfunction
 
 " Deletions as [lnum, items], newest last, so u puts back all a 3dd or a

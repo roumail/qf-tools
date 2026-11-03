@@ -18,6 +18,16 @@ Small helpers for the quickfix and location lists.
 Removing entries edits the list in place, so it doesn't use up the 10-list
 quickfix history.
 
+## For other plugins
+
+After `dd`, `d` or `u` changes a list, `User QfToolsChanged` fires, with
+the list window current, so a plugin can keep track of what was removed
+from a list of its own:
+
+```vim
+autocmd User QfToolsChanged call MyPluginSync()
+```
+
 ## Install
 
 ```vim
