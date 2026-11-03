@@ -11,8 +11,9 @@ Small helpers for the quickfix and location lists.
 | Key | Where | What it does |
 | --- | --- | --- |
 | `yoq` | anywhere | `:QfToggle` |
-| `dd` | quickfix / location list window | Remove the entry under the cursor. |
-| `u` | quickfix / location list window | Put the last removed entry back. With nothing left to restore, go to the older list (`:colder` / `:lolder`). |
+| `dd` | quickfix / location list window | Remove the entry under the cursor; `3dd` three of them. |
+| `d` (visual) | quickfix / location list window | Remove the selected entries. |
+| `u` | quickfix / location list window | Put back what the last `dd` or `d` removed. With nothing left to restore, go to the older list (`:colder` / `:lolder`). |
 
 Removing entries edits the list in place, so it doesn't use up the 10-list
 quickfix history.

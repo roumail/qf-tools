@@ -24,8 +24,8 @@ function! s:SetItems(items) abort
   endif
 endfunction
 
-" Deleted [lnum, item] pairs, newest last. Reset when the window shows a
-" different list.
+" Deletions as [lnum, items], newest last, so u puts back all a 3dd or a
+" visual d took. Reset when the window shows a different list.
 function! s:UndoStack() abort
   let l:id = s:GetList({'id': 0}).id
   if get(w:, 'qf_undo_id', -1) != l:id
@@ -35,18 +35,19 @@ function! s:UndoStack() abort
   return w:qf_undo
 endfunction
 
-function! qf_tools#delete_item() abort
+" Removes entries line1-line2 of the list in the window (to its end, at most)
+function! qf_tools#delete(line1, line2) abort
   if &buftype !=# 'quickfix'
     return
   endif
   let l:items = s:GetList({'items': 1}).items
-  if empty(l:items)
+  if a:line1 > len(l:items)
     return
   endif
-  let l:lnum = line('.')
-  call add(s:UndoStack(), [l:lnum, remove(l:items, l:lnum - 1)])
+  let l:removed = remove(l:items, a:line1 - 1, min([a:line2, len(l:items)]) - 1)
+  call add(s:UndoStack(), [a:line1, l:removed])
   call s:SetItems(l:items)
-  call cursor(min([l:lnum, len(l:items)]), 1)
+  call cursor(min([a:line1, len(l:items)]), 1)
 endfunction
 
 function! qf_tools#undo() abort
@@ -58,8 +59,8 @@ function! qf_tools#undo() abort
     execute s:IsLoclist() ? 'lolder' : 'colder'
     return
   endif
-  let [l:lnum, l:item] = remove(l:stack, -1)
+  let [l:lnum, l:removed] = remove(l:stack, -1)
   let l:items = s:GetList({'items': 1}).items
-  call s:SetItems(insert(l:items, l:item, l:lnum - 1))
+  call s:SetItems(extend(l:items, l:removed, l:lnum - 1))
   call cursor(l:lnum, 1)
 endfunction

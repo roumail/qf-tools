@@ -10,5 +10,5 @@ command! QuickFixToLocList call setloclist(0, getqflist())
 command! LocListToQuickFix call setqflist(getloclist(0))
 
 " Toggle the quickfix window (as vim-unimpaired's yo* toggles options).
-" dd / u in list windows: ftplugin/qf/qf_tools.vim
+" dd / visual d / u in list windows: ftplugin/qf/qf_tools.vim
 nnoremap <silent> yoq <Cmd>call qf_tools#toggle()<CR>
